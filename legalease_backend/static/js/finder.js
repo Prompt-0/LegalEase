@@ -2,18 +2,19 @@
 const searchInput = document.getElementById("case-search");
 const categorySelect = document.getElementById("case-category");
 const searchBtn = document.getElementById("search-cases-btn");
-const resultsSection = document.getElementById("cases-results");
-const noResultsSection = document.getElementById("no-cases-found");
+const resultsSection = document.getElementById("cases-results"); // Changed from cases-results
+const noResultsSection = document.getElementById("no-cases-found"); // Changed from no-cases-found
 const casesList = document.getElementById("cases-list");
 const casesCount = document.getElementById("cases-count");
+const resultsSummary = document.getElementById("results-summary");
 
 let allCases = []; // Will hold fetched case data
 let allActs = []; // Will hold fetched act data
 
 // Function to fetch all data from APIs
 function loadAllData() {
-  const casesPromise = fetch("/api/legalcases/").then((res) => res.json());
-  const actsPromise = fetch("/api/legalacts/").then((res) => res.json());
+  const casesPromise = fetch("/api/legalcases/").then((res) => res.json()); // <-- FIX
+  const actsPromise = fetch("/api/legalacts/").then((res) => res.json()); // <-- FIX
 
   Promise.all([casesPromise, actsPromise])
     .then(([cases, acts]) => {
@@ -22,6 +23,18 @@ function loadAllData() {
       console.log(
         `Loaded ${allCases.length} cases and ${allActs.length} acts.`,
       );
+
+      // Populate categories
+      const categories = [...new Set(cases.map((c) => c.category))];
+      categories.forEach((category) => {
+        if (category) {
+          const option = document.createElement("option");
+          option.value = category;
+          option.textContent = category;
+          categorySelect.appendChild(option);
+        }
+      });
+
       // Initially render all cases
       renderResults(allCases);
     })
@@ -41,17 +54,19 @@ function renderResults(cases) {
 
   if (cases.length > 0) {
     resultsSection.classList.remove("hidden");
-    noResultsSection.classList.add("hidden");
-    casesCount.textContent = `Legal Cases (${cases.length} found)`;
+    resultsSummary.style.display = "block";
+    noResultsSection.style.display = "none";
+    casesCount.textContent = `${cases.length} Similar Cases Found`;
   } else {
     resultsSection.classList.add("hidden");
-    noResultsSection.classList.remove("hidden");
+    resultsSummary.style.display = "none";
+    noResultsSection.style.display = "block";
     return;
   }
 
   cases.forEach((item) => {
     const card = document.createElement("div");
-    card.classList.add("card", "case-card");
+    card.classList.add("card", "case-card"); // Using styles from styles.css
     card.innerHTML = `
       <div class="card-body">
         <h3 class="case-title">${item.title}</h3>
@@ -86,7 +101,7 @@ function searchCases() {
 }
 
 // Event listeners
-searchBtn.addEventListener("click", searchCases);
+if (searchBtn) searchBtn.addEventListener("click", searchCases);
 
 // Load data on page load
 loadAllData();

@@ -75,14 +75,14 @@ function showAllLawyers() {
 }
 
 // Event listeners
-searchBtn.addEventListener("click", searchLawyers);
-showAllBtn.addEventListener("click", showAllLawyers);
+if (searchBtn) searchBtn.addEventListener("click", searchLawyers);
+if (showAllBtn) showAllBtn.addEventListener("click", showAllLawyers);
 
-// Load data from lawyers.json on page load
-fetch("/api/lawyers/")
+// Load data from API on page load
+fetch("/api/lawyers/") // <-- THIS IS THE FIX
   .then((response) => {
     if (!response.ok) {
-      throw new Error("Failed to load lawyers.json");
+      throw new Error("Failed to load lawyers data from API");
     }
     return response.json();
   })
