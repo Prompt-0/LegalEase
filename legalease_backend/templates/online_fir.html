@@ -4,12 +4,11 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>India Online FIR Portals Directory - Legalese</title>
+        <title>File Online FIR - legalease</title>
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
-
         <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
         <link rel="stylesheet" href="{% static 'css/fir.css' %}" />
     </head>
@@ -19,7 +18,7 @@
                 <div class="navbar-content">
                     <a href="/" class="logo">
                         <i class="fas fa-scale-balanced"></i>
-                        <span>Legalese</span>
+                        <span>legalease</span>
                     </a>
                     <div class="desktop-nav">
                         <a href="/" class="nav-link"
@@ -46,28 +45,29 @@
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
-                <div class="mobile-nav" id="mobileNav">
-                    <a href="/" class="mobile-nav-link"
-                        ><i class="fas fa-home"></i> Home</a
-                    >
-                    <a href="/legalbot/" class="mobile-nav-link"
-                        ><i class="fas fa-comment-dots"></i> LegalBot</a
-                    >
-                    <a href="/documents/" class="mobile-nav-link"
-                        ><i class="fas fa-file-alt"></i> Documents</a
-                    >
-                    <a href="/police-stations/" class="mobile-nav-link active"
-                        ><i class="fas fa-map-marker-alt"></i> Police Help</a
-                    >
-                    <a href="/contacts/" class="mobile-nav-link"
-                        ><i class="fas fa-phone"></i> Contacts</a
-                    >
-                    <a href="/legal-books/" class="mobile-nav-link"
-                        ><i class="fas fa-book"></i> Legal Books</a
-                    >
-                </div>
             </div>
         </nav>
+
+        <div class="mobile-nav" id="mobileNav">
+            <a href="/" class="mobile-nav-link"
+                ><i class="fas fa-home"></i> Home</a
+            >
+            <a href="/legalbot/" class="mobile-nav-link"
+                ><i class="fas fa-comment-dots"></i> LegalBot</a
+            >
+            <a href="/documents/" class="mobile-nav-link"
+                ><i class="fas fa-file-alt"></i> Documents</a
+            >
+            <a href="/police-stations/" class="mobile-nav-link active"
+                ><i class="fas fa-map-marker-alt"></i> Police Help</a
+            >
+            <a href="/contacts/" class="mobile-nav-link"
+                ><i class="fas fa-phone"></i> Contacts</a
+            >
+            <a href="/legal-books/" class="mobile-nav-link"
+                ><i class="fas fa-book"></i> Legal Books</a
+            >
+        </div>
 
         <header class="hero-section">
             <div class="container">
@@ -75,53 +75,134 @@
                     <div class="hero-icon">
                         <i class="fas fa-file-signature"></i>
                     </div>
-                    <h1>India Online FIR Portals Directory</h1>
+                    <h1>Online FIR Submission</h1>
                     <p>
-                        Easily find and access official FIR registration
-                        websites for every state and union territory in India.
-                        File your complaints online through verified government
-                        portals.
+                        Submit your First Information Report directly to our
+                        secure system. Your report will be recorded and viewable
+                        in the admin panel.
                     </p>
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <span class="stat-number" id="totalStates">0</span>
-                            <span class="stat-label">States & UTs</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">24/7</span>
-                            <span class="stat-label">Available</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">100%</span>
-                            <span class_name="stat-label">Official</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </header>
 
-        <section class="search-section">
-            <div class="container"></div>
-        </section>
-
         <main class="main-content">
             <div class="container">
-                <div class="notice-card"></div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Complainant Information</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="fir-form" class="form-grid">
+                            <div class="form-group">
+                                <label for="complainant-name"
+                                    >Complainant's Name *</label
+                                >
+                                <input
+                                    type="text"
+                                    id="complainant-name"
+                                    name="complainant-name"
+                                    required
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="father-name">Father's Name</label>
+                                <input
+                                    type="text"
+                                    id="father-name"
+                                    name="father-name"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="complainant-email"
+                                    >Email Address</label
+                                >
+                                <input
+                                    type="email"
+                                    id="complainant-email"
+                                    name="complainant-email"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="complainant-phone"
+                                    >Phone Number *</label
+                                >
+                                <input
+                                    type="tel"
+                                    id="complainant-phone"
+                                    name="complainant-phone"
+                                    required
+                                />
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="complainant-address"
+                                    >Address *</label
+                                >
+                                <textarea
+                                    id="complainant-address"
+                                    name="complainant-address"
+                                    rows="3"
+                                    required
+                                ></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="district">District *</label>
+                                <input
+                                    type="text"
+                                    id="district"
+                                    name="district"
+                                    required
+                                />
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
-                <div class="loading-container" id="loadingContainer"></div>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h2>Incident Details</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="fir-details-form" class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="subject"
+                                    >Subject of Incident *</label
+                                >
+                                <input
+                                    type="text"
+                                    id="subject"
+                                    name="subject"
+                                    required
+                                />
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="details-of-incident"
+                                    >Details of Incident *</label
+                                >
+                                <textarea
+                                    id="details-of-incident"
+                                    name="details-of-incident"
+                                    rows="8"
+                                    placeholder="Provide all known details: date, time, location, persons involved, and sequence of events..."
+                                    required
+                                ></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
-                <div class="results-info" id="resultsInfo"></div>
+                <div id="form-status" class="form-status hidden"></div>
 
-                <div class="states-grid" id="statesGrid"></div>
-
-                <div class="no-results" id="noResults"></div>
+                <button
+                    type="submit"
+                    form="fir-form"
+                    class="btn btn-primary btn-lg btn-block mt-4"
+                >
+                    <i class="fas fa-paper-plane"></i> Submit FIR
+                </button>
             </div>
         </main>
 
-        <section class="help-section">
-            <div class="container"></div>
-        </section>
-
+        <script src="{% static 'js/main.js' %}"></script>
         <script src="{% static 'js/fir.js' %}"></script>
     </body>
 </html>

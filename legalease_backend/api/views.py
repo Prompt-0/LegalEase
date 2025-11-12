@@ -1,3 +1,8 @@
+# --- Add these new imports at the TOP of api/views.py ---
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -71,7 +76,7 @@ class LegalBotQueryAPI(APIView):
         if any(greeting in query for greeting in ["hello", "hi", "hey"]):
             return Response(
                 {
-                    "answer": "Hello! I am LegalEase Bot. How can I help you with your legal query today?"
+                    "answer": "Hello! I am legalease Bot. How can I help you with your legal query today?"
                 }
             )
         if "case about" in query or "tell me about" in query:
@@ -153,3 +158,46 @@ class OnlineFIRView(TemplateView):
 
 class LegalNoticeView(TemplateView):
     template_name = "legal-notice.html"
+
+
+def signup_view(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful!")
+            return redirect("/")  # Redirect to home page
+        else:
+            messages.error(
+                request, "Invalid information. Please correct the errors below."
+            )
+    else:
+        form = UserCreationForm()
+    return render(request, "signup.html", {"form": form})
+
+
+def login_view(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"Welcome back, {username}!")
+                return redirect("/")  # Redirect to home page
+            else:
+                messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid username or password.")
+    else:
+        form = AuthenticationForm()
+    return render(request, "login.html", {"form": form})
+
+
+def logout_view(request):
+    logout(request)
+    messages.info(request, "You have successfully logged out.")
+    return redirect("/")  # Redirect to home page
