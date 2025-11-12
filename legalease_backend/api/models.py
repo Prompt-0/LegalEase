@@ -13,3 +13,16 @@ class Lawyer(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class PoliceStation(models.Model):
+    name = models.CharField(max_length=255)
+    # We need to handle a list of phones. JSONField is perfect for this.
+    phones = models.JSONField(default=list)
+    address = models.TextField(blank=True)
+    pincode = models.CharField(max_length=10, blank=True)
+    district = models.CharField(max_length=255, blank=True)
+    district_court = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return self.name

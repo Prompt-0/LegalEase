@@ -9,3 +9,9 @@ class LawyerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lawyer
         fields = "__all__"  # This will include all fields from our model
+
+
+class PoliceStationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PoliceStation
+        fields = "__all__"
