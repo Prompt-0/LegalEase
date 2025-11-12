@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import generics
 
-# Create your views here.
+from .models import Lawyer
+from .serializers import LawyerSerializer
+
+
+class LawyerListAPI(generics.ListAPIView):
+    queryset = Lawyer.objects.all()
+    serializer_class = LawyerSerializer
