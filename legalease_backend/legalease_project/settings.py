@@ -21,12 +21,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# For development, this is okay. For production, load from an environment variable:
+# SECRET_KEY = os.environ.get("SECRET_KEY", "your-fallback-key-here")
 SECRET_KEY = "django-insecure-isvix@=!q=!j6gi5b8sx*783akrsyt$s^mo_!q!1a*%#_sn6fb"
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# For development, this is okay. For production, set this to False.
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# --- FIX: Added development hosts ---
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -46,7 +50,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",  # <-- ADD THIS
+    "corsheaders.middleware.CorsMiddleware",  # <-- This is correct
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -129,6 +133,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Allow all origins for development
 CORS_ALLOW_ALL_ORIGINS = True
+# For production, you should be more restrictive:
+# CORS_ALLOWED_ORIGINS = [
+#     "http://your-frontend-domain.com",
+# ]
+
 
 # At the bottom of Legalease_project/settings.py
 

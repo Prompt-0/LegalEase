@@ -13,6 +13,8 @@ urlpatterns = [
     # NEW read-only paths
     path("legalcases/", views.LegalCaseListAPI.as_view(), name="legalcase-list"),
     path("legalacts/", views.LegalActListAPI.as_view(), name="legalact-list"),
+    # --- FIX: Add the URL for the bot API ---
+    path("legalbot/query/", views.LegalBotQueryAPI.as_view(), name="legalbot-query"),
     # NEW write-only paths (for forms)
     path("fir/submit/", views.OnlineFIRCreateAPI.as_view(), name="fir-submit"),
     path(
