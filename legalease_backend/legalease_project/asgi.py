@@ -1,5 +1,5 @@
 """
-ASGI config for legalease_project project.
+ASGI config for Legalease_project project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

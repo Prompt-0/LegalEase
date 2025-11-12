@@ -76,7 +76,7 @@ class LegalBotQueryAPI(APIView):
         if any(greeting in query for greeting in ["hello", "hi", "hey"]):
             return Response(
                 {
-                    "answer": "Hello! I am legalease Bot. How can I help you with your legal query today?"
+                    "answer": "Hello! I am Legalease Bot. How can I help you with your legal query today?"
                 }
             )
         if "case about" in query or "tell me about" in query:

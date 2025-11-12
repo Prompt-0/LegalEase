@@ -1,5 +1,5 @@
 """
-WSGI config for legalease_project project.
+WSGI config for Legalease_project project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

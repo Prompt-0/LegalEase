@@ -1,4 +1,4 @@
-# 🏛️ legalease - Virtual Law Assistant
+# 🏛️ Legalease - Virtual Law Assistant
 
 A static HTML, CSS, and JavaScript website designed to be a "Virtual Law Assistant" for citizens. It provides a dashboard of tools to help with everyday legal needs, such as a helpful chatbot, a directory of contacts, and a legal case finder.
 
