@@ -2,8 +2,8 @@
 const searchInput = document.getElementById("case-search");
 const categorySelect = document.getElementById("case-category");
 const searchBtn = document.getElementById("search-cases-btn");
-const resultsSection = document.getElementById("cases-results"); // Changed from cases-results
-const noResultsSection = document.getElementById("no-cases-found"); // Changed from no-cases-found
+const resultsSection = document.getElementById("cases-results");
+const noResultsSection = document.getElementById("no-cases-found");
 const casesList = document.getElementById("cases-list");
 const casesCount = document.getElementById("cases-count");
 const resultsSummary = document.getElementById("results-summary");
@@ -13,8 +13,8 @@ let allActs = []; // Will hold fetched act data
 
 // Function to fetch all data from APIs
 function loadAllData() {
-  const casesPromise = fetch("/api/legalcases/").then((res) => res.json()); // <-- FIX
-  const actsPromise = fetch("/api/legalacts/").then((res) => res.json()); // <-- FIX
+  const casesPromise = fetch("/api/legalcases/").then((res) => res.json()); // <-- FIX 1
+  const actsPromise = fetch("/api/legalacts/").then((res) => res.json()); // <-- FIX 2
 
   Promise.all([casesPromise, actsPromise])
     .then(([cases, acts]) => {
@@ -31,7 +31,7 @@ function loadAllData() {
           const option = document.createElement("option");
           option.value = category;
           option.textContent = category;
-          categorySelect.appendChild(option);
+          if (categorySelect) categorySelect.appendChild(option);
         }
       });
 
@@ -40,27 +40,32 @@ function loadAllData() {
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
-      noResultsSection.classList.remove("hidden");
-      noResultsSection.querySelector("h3").textContent =
-        "Failed to load legal data";
-      noResultsSection.querySelector("p").textContent =
-        "Please try again later.";
+      if (noResultsSection) {
+        noResultsSection.classList.remove("hidden");
+        noResultsSection.querySelector("h3").textContent =
+          "Failed to load legal data";
+        noResultsSection.querySelector("p").textContent =
+          "Please try again later.";
+      }
     });
 }
 
 // Render results
 function renderResults(cases) {
+  if (!casesList) return; // Exit if elements aren't on the page
+
   casesList.innerHTML = ""; // clear previous
 
   if (cases.length > 0) {
-    resultsSection.classList.remove("hidden");
-    resultsSummary.style.display = "block";
-    noResultsSection.style.display = "none";
-    casesCount.textContent = `${cases.length} Similar Cases Found`;
+    if (resultsSection) resultsSection.classList.remove("hidden");
+    if (resultsSummary) resultsSummary.style.display = "block";
+    if (noResultsSection) noResultsSection.style.display = "none";
+    if (casesCount)
+      casesCount.textContent = `${cases.length} Similar Cases Found`;
   } else {
-    resultsSection.classList.add("hidden");
-    resultsSummary.style.display = "none";
-    noResultsSection.style.display = "block";
+    if (resultsSection) resultsSection.classList.add("hidden");
+    if (resultsSummary) resultsSummary.style.display = "none";
+    if (noResultsSection) noResultsSection.style.display = "block";
     return;
   }
 

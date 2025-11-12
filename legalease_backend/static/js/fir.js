@@ -13,8 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault(); // Stop default form submission
 
       // Show submitting message
-      formStatus.textContent = "Submitting your FIR...";
-      formStatus.classList.remove("hidden", "success", "error");
+      if (formStatus) {
+        formStatus.textContent = "Submitting your FIR...";
+        formStatus.classList.remove("hidden", "success", "error");
+      }
 
       const formData = new FormData(firForm);
       const data = {
@@ -30,9 +32,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Send data to the API
       fetch("/api/fir/submit/", {
+        // <-- THIS IS THE FIX
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          // Note: We'll need to add CSRF token header for security later
         },
         body: JSON.stringify(data),
       })
@@ -48,16 +52,20 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((result) => {
           // Success!
           console.log("Success:", result);
-          formStatus.textContent = `FIR submitted successfully. Your reference ID is: ${result.id}`;
-          formStatus.classList.add("success");
+          if (formStatus) {
+            formStatus.textContent = `FIR submitted successfully. Your reference ID is: ${result.id}`;
+            formStatus.classList.add("success");
+          }
           firForm.reset(); // Clear the form
         })
         .catch((error) => {
           // Error!
           console.error("Error:", error);
-          formStatus.textContent =
-            "An error occurred during submission. Please check your inputs and try again.";
-          formStatus.classList.add("error");
+          if (formStatus) {
+            formStatus.textContent =
+              "An error occurred during submission. Please check your inputs and try again.";
+            formStatus.classList.add("error");
+          }
         });
     });
   }

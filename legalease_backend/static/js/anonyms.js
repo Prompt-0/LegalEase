@@ -7,8 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault(); // Stop default form submission
 
       // Show submitting message
-      formStatus.textContent = "Submitting your report...";
-      formStatus.classList.remove("hidden", "success", "error");
+      if (formStatus) {
+        formStatus.textContent = "Submitting your report...";
+        formStatus.classList.remove("hidden", "success", "error");
+      }
 
       // Get form data
       const formData = new FormData(reportForm);
@@ -21,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Send data to the API
       fetch("/api/report/submit/", {
+        // <-- THIS IS THE FIX
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,16 +39,21 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((result) => {
           // Success!
           console.log("Success:", result);
-          formStatus.textContent =
-            "Report submitted successfully. Thank you for your courage.";
-          formStatus.classList.add("success");
+          if (formStatus) {
+            formStatus.textContent =
+              "Report submitted successfully. Thank you for your courage.";
+            formStatus.classList.add("success");
+          }
           reportForm.reset(); // Clear the form
         })
         .catch((error) => {
           // Error!
           console.error("Error:", error);
-          formStatus.textContent = "An error occurred. Please try again later.";
-          formStatus.classList.add("error");
+          if (formStatus) {
+            formStatus.textContent =
+              "An error occurred. Please try again later.";
+            formStatus.classList.add("error");
+          }
         });
     });
   }

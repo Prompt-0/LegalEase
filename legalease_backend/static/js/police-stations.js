@@ -1,4 +1,4 @@
-let allPoliceStations = [];
+let allPoliceStations = []; // Will hold the fetched data
 let randomSample = []; // store current sample so we can reuse it on empty searches
 
 function normalize(str) {
@@ -9,12 +9,14 @@ function renderStations(stations) {
   const stationsGrid = document.getElementById("stations-grid");
   const stationsResults = document.getElementById("stations-results");
   const stationsCount = document.getElementById("stations-count");
+  if (!stationsGrid) return; // Make sure element exists
   stationsGrid.innerHTML = "";
 
-  stationsCount.textContent = `Police Stations (${stations.length} shown)`;
+  if (stationsCount)
+    stationsCount.textContent = `Police Stations (${stations.length} shown)`;
 
   if (stations.length === 0) {
-    stationsResults.classList.remove("hidden");
+    if (stationsResults) stationsResults.classList.remove("hidden");
     return;
   }
 
@@ -22,25 +24,21 @@ function renderStations(stations) {
     const card = document.createElement("div");
     card.classList.add("station-card");
     card.innerHTML = `
-        <h3>${station.name}</h3>
-        <p><strong>Address:</strong> ${station.address}</p>
-        <p><strong>Pincode:</strong> ${station.pincode}</p>
-        <p><strong>District:</strong> ${station.district}</p>
-        <p><strong>Phones:</strong> ${
-          station.phones.length > 0
-            ? station.phones
-                .map((ph) => `<a href="tel:${ph}">${ph}</a>`)
-                .join(", ")
-            : "N/A"
-        }</p>
-        `;
+    <h3>${station.name}</h3>
+    <p><strong>Address:</strong> ${station.address}</p>
+    <p><strong>Pincode:</strong> ${station.pincode}</p>
+    <p><strong>District:</strong> ${station.district}</p>
+    <p><strong>Phones:</strong> ${
+      station.phones.length > 0
+        ? station.phones.map((ph) => `<a href="tel:${ph}">${ph}</a>`).join(", ")
+        : "N/A"
+    }</p>
+    `;
     stationsGrid.appendChild(card);
   });
 
-  stationsResults.classList.remove("hidden");
+  if (stationsResults) stationsResults.classList.remove("hidden");
 }
-
-// In js/police-stations.js
 
 function findStations() {
   const input = document.getElementById("location").value.trim();
@@ -51,7 +49,6 @@ function findStations() {
   }
   const inputNorm = normalize(input);
 
-  // THIS IS THE CORRECTED LINE (as part of the whole function)
   const matches = allPoliceStations.filter((station) => {
     return (
       normalize(station.address).includes(inputNorm) ||
@@ -86,18 +83,18 @@ const currentLocationBtn = document.getElementById("current-location-btn");
 if (currentLocationBtn)
   currentLocationBtn.addEventListener("click", useCurrentLocation);
 
-// ✅ Fetch JSON details from the new API
-fetch("/api/policestations/")
+// ✅ Fetch JSON details from external file
+fetch("/api/policestations/") // <-- THIS IS THE FIX
   .then((response) => {
     if (!response.ok) throw new Error("Failed to load police stations data.");
     return response.json();
   })
   .then((data) => {
-    allPoliceStations = data; // <-- FIX 1: The API returns the list directly
-    console.log(`Loaded ${allPoliceStations.length} police stations.`); // <-- FIX 2: Use .length on the list
+    allPoliceStations = data;
+    console.log(`Loaded ${allPoliceStations.length} police stations.`);
 
-    // Choose a random sample of 10-15 stations
-    const shuffled = allPoliceStations // <-- FIX 3: Use the new variable
+    // Choose a random sample of 20 stations
+    const shuffled = allPoliceStations
       .map((value) => ({ value, sort: Math.random() })) // decorate with random sort keys
       .sort((a, b) => a.sort - b.sort) // sort randomly
       .map(({ value }) => value); // undecorate
@@ -108,6 +105,6 @@ fetch("/api/policestations/")
     renderStations(randomSample); // Show random sample immediately
   })
   .catch((err) => {
-    console.error("Error fetching police stations data:", err); // More specific error
+    console.error(err);
     alert("Could not load police stations data. Please try again later.");
   });

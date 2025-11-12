@@ -92,7 +92,11 @@ fetch("/api/lawyers/") // <-- THIS IS THE FIX
   })
   .catch((error) => {
     console.error("Error fetching lawyers data:", error);
-    noResultsSection.classList.remove("hidden");
-    noResultsSection.querySelector("h3").textContent = "Failed to load lawyers";
-    noResultsSection.querySelector("p").textContent = "Please try again later.";
+    if (noResultsSection) {
+      noResultsSection.classList.remove("hidden");
+      noResultsSection.querySelector("h3").textContent =
+        "Failed to load lawyers";
+      noResultsSection.querySelector("p").textContent =
+        "Please try again later.";
+    }
   });

@@ -7,8 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault(); // Prevent default HTML form submission
 
       // Show submitting message
-      formStatus.textContent = "Submitting your message...";
-      formStatus.classList.remove("hidden", "success", "error");
+      if (formStatus) {
+        formStatus.textContent = "Submitting your message...";
+        formStatus.classList.remove("hidden", "success", "error");
+      }
 
       // Get form data
       const formData = new FormData(contactForm);
@@ -21,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Send data to the API
       fetch("/api/contact/submit/", {
+        // <-- THIS IS THE FIX
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,17 +40,29 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((result) => {
           // Success!
           console.log("Success:", result);
-          formStatus.textContent =
-            "Message sent successfully! We will get back to you soon.";
-          formStatus.classList.add("success");
+          if (formStatus) {
+            formStatus.textContent =
+              "Message sent successfully! We will get back to you soon.";
+            formStatus.classList.add("success");
+          }
           contactForm.reset(); // Clear the form
         })
         .catch((error) => {
           // Error!
           console.error("Error:", error);
-          formStatus.textContent = "An error occurred. Please try again later.";
-          formStatus.classList.add("error");
+          if (formStatus) {
+            formStatus.textContent =
+              "An error occurred. Please try again later.";
+            formStatus.classList.add("error");
+          }
         });
     });
   }
+
+  // --- Logic for the helpline numbers (already in your file) ---
+  // (No fetch calls here, so no fixes needed)
+  const helplines = {
+    // ...
+  };
+  // ... all the helpline rendering logic
 });
