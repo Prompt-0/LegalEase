@@ -2,16 +2,16 @@
 
 from rest_framework import serializers
 
-from .models import Lawyer
+from .models import Lawyer, PoliceStation  # <-- THIS LINE IS THE FIX
 
 
 class LawyerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lawyer
-        fields = "__all__"  # This will include all fields from our model
+        fields = "__all__"
 
 
 class PoliceStationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = PoliceStation
+        model = PoliceStation  # <-- This line will now work
         fields = "__all__"

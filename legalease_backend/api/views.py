@@ -1,7 +1,12 @@
+# In api/views.py
+
 from rest_framework import generics
 
-from .models import Lawyer
-from .serializers import LawyerSerializer
+from .models import Lawyer, PoliceStation  # <-- THIS LINE IS THE FIX
+from .serializers import (  # <-- THIS LINE IS THE FIX
+    LawyerSerializer,
+    PoliceStationSerializer,
+)
 
 
 class LawyerListAPI(generics.ListAPIView):
