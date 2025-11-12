@@ -87,7 +87,7 @@ if (currentLocationBtn)
   currentLocationBtn.addEventListener("click", useCurrentLocation);
 
 // ✅ Fetch JSON details from the new API
-fetch("http://127.0.0.1:8000/api/policestations/")
+fetch("/api/policestations/")
   .then((response) => {
     if (!response.ok) throw new Error("Failed to load police stations data.");
     return response.json();

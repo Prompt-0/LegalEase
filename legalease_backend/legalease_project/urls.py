@@ -1,24 +1,28 @@
-"""
-URL configuration for legalease_project project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-
+from api import views  # Import all views from our api app
 from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    # --- Frontend Page URLs ---
+    path("", views.IndexView.as_view(), name="index"),
+    path("documents/", views.DocumentsView.as_view(), name="documents"),
+    path(
+        "police-stations/", views.PoliceStationsView.as_view(), name="police-stations"
+    ),
+    path("contacts/", views.ContactsView.as_view(), name="contacts"),
+    path("legal-books/", views.LegalBooksView.as_view(), name="legal-books"),
+    path("legalbot/", views.LegalBotView.as_view(), name="legalbot"),
+    path("lawyer-connect/", views.LawyerConnectView.as_view(), name="lawyer-connect"),
+    path("case-finder/", views.CaseFinderView.as_view(), name="case-finder"),
+    path(
+        "anonymous-report/",
+        views.AnonymousReportView.as_view(),
+        name="anonymous-report",
+    ),
+    path("online-fir/", views.OnlineFIRView.as_view(), name="online-fir"),
+    path("legal-notice/", views.LegalNoticeView.as_view(), name="legal-notice"),
+    # --- API Data URLs ---
     path("api/", include("api.urls")),
+    # --- Admin URL ---
+    path("admin/", admin.site.urls),
 ]
