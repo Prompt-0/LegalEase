@@ -1,39 +1,84 @@
-# 🏛️ Legalease - Virtual Law Assistant
+# 🏛️ Legalease - Virtual Law Assistant (Django Version)
 
-A static HTML, CSS, and JavaScript website designed to be a "Virtual Law Assistant" for citizens. It provides a dashboard of tools to help with everyday legal needs, such as a helpful chatbot, a directory of contacts, and a legal case finder.
+A full-stack web application built with Python/Django and JavaScript, designed to be a "Virtual Law Assistant" for citizens. It provides a dashboard of tools to help with everyday legal needs, including a helpful chatbot, dynamic database-driven finders, and secure form submissions.
 
 ---
 
 ## 🛠️ Features
 
-* **LegalBot:** A (simulated) chatbot interface to get instant legal guidance in multiple languages (English, Hindi, Bengali).
-* **File FIR Online:** A portal to access online FIR portals.
-* **Police Stations:** A tool to find nearby police stations.
-* **Contact Directory:** A list of important police and institutional contacts.
-* **Legal Books:** A reference section for legal acts.
-* **Lawyer Connect:** A directory to find and connect with lawyers.
-* **Case Finder:** A client-side search tool to find similar legal cases from a static JSON database.
-* **Anonymous Report:** A form to submit anonymous tips.
-* **Document Generator:** A template for creating a legal notice.
+* **Full User Authentication:** Secure signup, login, and logout functionality using Django's built-in auth system.
+* **Dynamic API Backend:** A REST API built with Django Rest Framework serves all application data from an SQLite database.
+* **Form Submissions:** Secure, backend-powered forms for:
+    * Online FIR
+    * Anonymous Reports
+    * Contact Messages
+* **Database-Driven Finders:**
+    * **Lawyer Connect:** Find lawyers by name, specialization, or location, with all data served from the backend API.
+    * **Police Stations:** A tool to find police stations (pre-loaded with Delhi stations) from the database.
+    * **Case Finder:** Search for legal cases stored in the database.
+* **LegalBot:** Features an embedded chatbot for instant legal guidance.
+* **Client-Side Document Generator:** A tool to generate a Legal Notice, which uses browser `localStorage` to save progress.
 
 ---
 
 ## 🧱 Tech Stack
 
-* **Frontend:** HTML
-* **Styling:** CSS
-* **Client-side Scripting:** Vanilla JavaScript (for DOM manipulation, tabs, chatbot, and search)
-* **Data:** Static JSON files (e.g., `data/lawyers.json`, `data/legal-casses.json`)
-* **Icons:** Font Awesome
+* **Backend:** Python 3, Django, Django Rest Framework
+* **Database:** SQLite (for development)
+* **API:** RESTful API with JSON responses
+* **Frontend:** Django Templates (HTML), Vanilla JavaScript (for dynamic data fetching), CSS
+* **Core Dependencies:** `django`, `djangorestframework`, `django-cors-headers`
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started (Linux/Development)
 
-This is a static website. No installation is required.
+This is a Django project and requires a Python environment to run.
 
-1.  Ensure all files are in the same directory.
-2.  Open the `index.html` file in your web browser.
-3.  For the best experience (to allow `fetch` requests for the JSON data), run it using a local web server.
-    * If you have Python: `python -m http.server`
-    * If you use VS Code, you can use the "Live Server" extension.
+1.  **Clone the repository (if you haven't):**
+    ```bash
+    git clone [your-repo-url]
+    cd legalease/legalease_backend
+    ```
+
+2.  **Create and activate a virtual environment:**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+3.  **Install dependencies:**
+    (You will need to create a `requirements.txt` file. Based on your project, it should contain:)
+    ```bash
+    pip install django djangorestframework django-cors-headers
+    ```
+
+4.  **Run database migrations:**
+    This will set up your `db.sqlite3` database based on the schemas in `api/models.py`.
+    ```bash
+    python manage.py migrate
+    ```
+
+5.  **Create a superuser (for Admin access):**
+    This lets you log in to `/admin/` to manage the data.
+    ```bash
+    python manage.py createsuperuser
+    ```
+    (Follow the prompts to create a username and password)
+
+6.  **Run the development server:**
+    ```bash
+    python manage.py runserver
+    ```
+
+7.  **Open the application:**
+    Open your web browser and go to **http://127.0.0.1:8000/**
+
+---
+
+### Other Files to Delete
+
+These files are either broken, unused, or add no value to the project:
+
+* `legalease_backend/templates/LegalBot_Upgrade.html` (Unused, broken draft)
+* `legalease` (The three empty files at the root of the project)
